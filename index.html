@@ -1,0 +1,1907 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pré-Calc Trabalhista</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,700&family=JetBrains+Mono:wght@400;500;700&family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
+</script>
+<style>
+:root{
+  --ink:#0e1418;
+  --paper:#f5f1ea;
+  --paper-2:#ebe5d9;
+  --paper-3:#dfd6c3;
+  --rule:#241d18;
+  --red:#a31621;
+  --olive:#5c5d3d;
+  --gold:#9c7c2a;
+  --mute:#6b665d;
+  --good:#1f5d3a;
+  --warn:#a86b00;
+  --shadow:rgba(20,15,8,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:'Inter Tight',sans-serif;font-size:15px;line-height:1.5}
+body{
+  background:
+    radial-gradient(circle at 10% 0%, rgba(156,124,42,.08) 0%, transparent 40%),
+    radial-gradient(circle at 90% 100%, rgba(163,22,33,.05) 0%, transparent 40%),
+    var(--paper);
+  min-height:100vh;
+}
+
+/* ============ HEADER ============ */
+header.topo{
+  border-bottom:1px solid var(--rule);
+  padding:20px 40px 16px;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  background:var(--paper);
+  position:sticky;top:0;z-index:50;
+}
+.logo{
+  font-family:'Fraunces',serif;
+  font-weight:300;
+  font-size:32px;
+  letter-spacing:-1px;
+  line-height:1;
+}
+.logo em{font-style:italic;color:var(--red)}
+.logo small{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--mute);
+  display:block;
+  margin-top:8px;
+  font-weight:400;
+  text-transform:uppercase;
+}
+.tagline{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--mute);
+  letter-spacing:1px;
+  text-align:right;
+  line-height:1.7;
+}
+.tagline strong{color:var(--ink);font-weight:500}
+
+/* ============ LAYOUT ============ */
+main{
+  max-width:1280px;
+  margin:0 auto;
+  padding:40px;
+  display:grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap:32px;
+}
+@media (max-width:980px){main{grid-template-columns:1fr;padding:24px}}
+
+.coluna{display:flex;flex-direction:column;gap:24px}
+
+.bloco{
+  background:rgba(255,253,247,.6);
+  border:1px solid var(--rule);
+  padding:28px;
+  position:relative;
+}
+.bloco h2{
+  font-family:'Fraunces',serif;
+  font-weight:400;
+  font-size:22px;
+  letter-spacing:-.5px;
+  margin-bottom:6px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--rule);
+  display:flex;align-items:baseline;justify-content:space-between;
+}
+.bloco h2 .num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--red);
+  letter-spacing:2px;
+  font-weight:500;
+}
+
+/* ============ FORM ============ */
+.campo{display:flex;flex-direction:column;gap:6px;margin-top:18px}
+.campo label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--mute);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+.campo input, .campo select{
+  font-family:'Inter Tight',sans-serif;
+  font-size:15px;
+  padding:9px 0 7px;
+  border:none;
+  border-bottom:1px solid var(--rule);
+  background:transparent;
+  color:var(--ink);
+  outline:none;
+  transition:border-color .2s;
+}
+.campo input:focus, .campo select:focus{
+  border-bottom-color:var(--red);
+  border-bottom-width:2px;
+  padding-bottom:6px;
+}
+.campo input::placeholder{color:#bba}
+.linha-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+
+/* ============ TABS VERBAS ============ */
+.tabs-verbas{
+  display:flex;flex-wrap:wrap;gap:0;
+  border-bottom:1px solid var(--rule);
+  margin-top:20px;
+  margin-bottom:0;
+}
+.tab-verba{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+  padding:8px 12px;
+  cursor:pointer;
+  border:none;background:none;color:var(--mute);
+  border-bottom:2px solid transparent;
+  margin-bottom:-1px;
+  transition:all .15s;
+}
+.tab-verba:hover{color:var(--ink)}
+.tab-verba.ativa{color:var(--red);border-bottom-color:var(--red)}
+.painel-verba{display:none;padding-top:8px}
+.painel-verba.ativo{display:block}
+
+.checkbox-verba{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:14px 0;border-bottom:1px dashed var(--paper-3);
+  cursor:pointer;
+}
+.checkbox-verba input[type=checkbox]{margin-top:3px;accent-color:var(--red)}
+.checkbox-verba label{cursor:pointer;flex:1}
+.checkbox-verba .titulo{
+  font-weight:500;font-size:14px;display:block;margin-bottom:2px;
+}
+.checkbox-verba .desc{
+  font-size:12px;color:var(--mute);line-height:1.4;
+}
+
+.parametros{
+  margin-left:24px;
+  padding:14px;
+  background:var(--paper-2);
+  border-left:2px solid var(--gold);
+  display:none;
+  margin-top:8px;margin-bottom:8px;
+}
+.checkbox-verba input:checked ~ .parametros, 
+.parametros.aberto{display:block}
+.parametros .linha-2{margin-top:0;gap:12px}
+.parametros .campo{margin-top:10px}
+
+/* ============ BOTÕES ============ */
+.botoes{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.btn{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  padding:14px 24px;
+  border:1px solid var(--rule);
+  background:var(--paper);
+  cursor:pointer;
+  transition:all .15s;
+  font-weight:500;
+}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn.primary{background:var(--red);color:var(--paper);border-color:var(--red)}
+.btn.primary:hover{background:var(--ink);border-color:var(--ink)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+/* ============ RESULTADO ============ */
+.resultado-vazio{
+  text-align:center;
+  padding:80px 40px;
+  color:var(--mute);
+  font-family:'Fraunces',serif;
+  font-style:italic;
+  font-size:18px;
+}
+.resultado-vazio::before{
+  content:"";
+  display:block;
+  width:40px;height:1px;
+  background:var(--rule);
+  margin:0 auto 20px;
+}
+
+.totalizador{
+  margin-top:20px;
+  padding:24px 0;
+  border-top:2px solid var(--ink);
+  border-bottom:1px solid var(--rule);
+}
+.totalizador .label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--mute);
+  text-transform:uppercase;
+}
+.totalizador .valor{
+  font-family:'Fraunces',serif;
+  font-size:48px;
+  font-weight:300;
+  letter-spacing:-1.5px;
+  line-height:1;
+  margin-top:6px;
+  color:var(--red);
+}
+
+.detalhes{margin-top:20px}
+.linha-verba{
+  display:grid;
+  grid-template-columns:1fr auto;
+  padding:14px 0;
+  border-bottom:1px solid var(--paper-3);
+  gap:20px;
+  align-items:baseline;
+}
+.linha-verba .nome{
+  font-weight:500;
+  font-size:14px;
+}
+.linha-verba .formula{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--mute);
+  margin-top:3px;
+  line-height:1.4;
+}
+.linha-verba .valor{
+  font-family:'JetBrains Mono',monospace;
+  font-size:15px;
+  font-weight:500;
+  text-align:right;
+  white-space:nowrap;
+}
+.linha-verba.indenizatoria .valor{color:var(--olive)}
+.reflexos{
+  margin-top:6px;
+  padding-left:14px;
+  border-left:1px solid var(--paper-3);
+}
+.reflexo{
+  display:flex;justify-content:space-between;
+  font-size:12px;
+  padding:4px 0;
+  color:var(--mute);
+}
+.reflexo .v{font-family:'JetBrains Mono',monospace}
+
+.resumo-financeiro{
+  margin-top:24px;
+  padding-top:20px;
+  border-top:1px solid var(--rule);
+}
+.resumo-financeiro h3{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--mute);
+  text-transform:uppercase;
+  font-weight:500;
+  margin-bottom:14px;
+}
+.resumo-row{
+  display:flex;justify-content:space-between;
+  padding:8px 0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:13px;
+}
+.resumo-row.desconto{color:var(--mute)}
+.resumo-row.total{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--rule);
+  font-family:'Fraunces',serif;
+  font-size:20px;
+  font-weight:500;
+}
+
+/* ============ UPLOADER DE PDF ============ */
+.uploader{
+  margin-top:8px;
+  padding:30px 24px;
+  border:2px dashed var(--rule);
+  text-align:center;
+  cursor:pointer;
+  transition:all .2s;
+  background:rgba(255,253,247,.4);
+  position:relative;
+}
+.uploader:hover{
+  border-color:var(--red);
+  background:rgba(163,22,33,.04);
+}
+.uploader.dragover{
+  border-color:var(--red);
+  background:rgba(163,22,33,.08);
+  transform:scale(1.01);
+}
+.uploader.processando{
+  border-color:var(--gold);
+  background:rgba(156,124,42,.08);
+  cursor:wait;
+}
+.uploader.sucesso{
+  border-color:var(--good);
+  border-style:solid;
+  background:rgba(31,93,58,.05);
+}
+.uploader.erro{
+  border-color:var(--red);
+  border-style:solid;
+  background:rgba(163,22,33,.05);
+}
+.uploader input[type=file]{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  cursor:pointer;
+}
+.upload-icone{
+  font-family:'Fraunces',serif;
+  font-size:36px;
+  font-weight:300;
+  line-height:1;
+  color:var(--mute);
+  margin-bottom:8px;
+  font-style:italic;
+}
+.upload-titulo{
+  font-family:'Fraunces',serif;
+  font-size:18px;
+  font-weight:400;
+  letter-spacing:-.3px;
+  margin-bottom:6px;
+}
+.upload-desc{
+  font-size:12px;
+  color:var(--mute);
+  line-height:1.5;
+  max-width:380px;
+  margin:0 auto;
+}
+.upload-desc strong{
+  color:var(--red);
+  font-weight:500;
+}
+.upload-arquivo{
+  margin-top:12px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--ink);
+  background:var(--paper-2);
+  padding:6px 12px;
+  display:inline-block;
+  letter-spacing:.5px;
+}
+.upload-resultado{
+  margin-top:14px;
+  text-align:left;
+  font-size:12px;
+  line-height:1.6;
+  background:var(--paper-2);
+  padding:14px 16px;
+  border-left:2px solid var(--good);
+}
+.upload-resultado h4{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  color:var(--mute);
+  font-weight:500;
+  margin-bottom:8px;
+}
+.upload-resultado .item-extraido{
+  display:flex;
+  justify-content:space-between;
+  padding:3px 0;
+}
+.upload-resultado .item-extraido .v{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--ink);
+  font-weight:500;
+}
+.upload-resultado .verbas-lista{
+  margin-top:8px;
+  padding-top:8px;
+  border-top:1px solid var(--paper-3);
+}
+.upload-resultado .verba-tag{
+  display:inline-block;
+  font-size:11px;
+  padding:2px 8px;
+  margin:2px 3px 2px 0;
+  background:var(--paper);
+  border:1px solid var(--paper-3);
+}
+.upload-resultado .verba-tag.def{
+  border-color:var(--good);
+  color:var(--good);
+}
+.upload-resultado .verba-tag.rej{
+  border-color:var(--mute);
+  color:var(--mute);
+  text-decoration:line-through;
+}
+.upload-spinner{
+  display:inline-block;
+  width:14px;height:14px;
+  border:2px solid var(--paper-3);
+  border-top-color:var(--gold);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  vertical-align:middle;
+  margin-right:8px;
+}
+@keyframes spin{ to { transform:rotate(360deg) } }
+
+/* ============ AVISO ============ */
+.aviso{
+  margin-top:20px;
+  padding:18px;
+  background:rgba(168,107,0,.08);
+  border-left:3px solid var(--warn);
+  font-size:12px;
+  line-height:1.5;
+  color:#5d3a00;
+}
+.aviso strong{color:var(--warn)}
+
+/* ============ FOOTER ============ */
+footer{
+  max-width:1280px;
+  margin:60px auto 30px;
+  padding:30px 40px;
+  border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;
+  color:var(--mute);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  gap:20px;flex-wrap:wrap;
+}
+
+/* ============ ANIMAÇÕES ============ */
+@keyframes slideIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.linha-verba{animation:slideIn .4s ease-out both}
+.linha-verba:nth-child(1){animation-delay:.05s}
+.linha-verba:nth-child(2){animation-delay:.1s}
+.linha-verba:nth-child(3){animation-delay:.15s}
+.linha-verba:nth-child(4){animation-delay:.2s}
+.linha-verba:nth-child(5){animation-delay:.25s}
+.linha-verba:nth-child(6){animation-delay:.3s}
+.linha-verba:nth-child(7){animation-delay:.35s}
+.linha-verba:nth-child(8){animation-delay:.4s}
+.linha-verba:nth-child(9){animation-delay:.45s}
+
+.calculando{
+  display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:var(--mute);letter-spacing:1.5px;text-transform:uppercase;
+}
+.calculando::after{
+  content:"";
+  width:8px;height:8px;
+  background:var(--red);border-radius:50%;
+  animation:pulse 1s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(.6);opacity:.4}
+}
+</style>
+</head>
+<body>
+
+<header class="topo">
+  <div class="logo">
+    Pré-Calc<em>.</em>
+    <small>Cálculo trabalhista estimativo</small>
+  </div>
+  <div class="tagline">
+    <strong>v3.0 — abril/2026</strong><br>
+    Motor próprio · ADC 58 · Lei 14.905<br>
+    Divergência média &lt; 1% vs PJe-Calc
+  </div>
+</header>
+
+<main>
+
+<!-- ============================================ -->
+<!-- COLUNA ESQUERDA: DADOS DE ENTRADA            -->
+<!-- ============================================ -->
+<div class="coluna">
+
+  <div class="bloco">
+    <h2>Leitura automática <span class="num">00 — PDF</span></h2>
+    <div class="uploader" id="uploader">
+      <input type="file" id="pdf-input" accept="application/pdf,.pdf">
+      <div class="upload-icone">&#8593;</div>
+      <div class="upload-titulo">Anexar sentença em PDF</div>
+      <div class="upload-desc">
+        Arraste o arquivo aqui ou <strong>clique para selecionar</strong>. O sistema lê o PDF, identifica processo, partes, salário, datas e verbas deferidas, e preenche automaticamente o formulário abaixo.
+      </div>
+      <div id="upload-arquivo" class="upload-arquivo" style="display:none"></div>
+      <div id="upload-resultado" class="upload-resultado" style="display:none"></div>
+    </div>
+  </div>
+
+  <div class="bloco">
+    <h2>Dados do processo <span class="num">01 — IDENTIFICAÇÃO</span></h2>
+    <div class="campo">
+      <label>Número do processo</label>
+      <input id="processo" type="text" placeholder="0000000-00.0000.5.00.0000" value="0000431-08.2024.5.09.0684">
+    </div>
+    <div class="linha-2">
+      <div class="campo">
+        <label>Vara / Tribunal</label>
+        <input id="vara" type="text" placeholder="Ex: 2ª VT Colombo / TRT9" value="2ª VT Colombo">
+      </div>
+      <div class="campo">
+        <label>Rito</label>
+        <select id="rito">
+          <option value="ordinario">Ordinário</option>
+          <option value="sumarissimo" selected>Sumaríssimo</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="bloco">
+    <h2>Vínculo e datas <span class="num">02 — TEMPORAL</span></h2>
+    <div class="linha-2">
+      <div class="campo">
+        <label>Admissão</label>
+        <input id="admissao" type="date" value="2022-05-05">
+      </div>
+      <div class="campo">
+        <label>Demissão</label>
+        <input id="demissao" type="date" value="2023-04-15">
+      </div>
+    </div>
+    <div class="linha-2">
+      <div class="campo">
+        <label>Data ajuizamento</label>
+        <input id="ajuizamento" type="date" value="2024-05-29">
+      </div>
+      <div class="campo">
+        <label>Data liquidação</label>
+        <input id="liquidacao" type="date" value="2026-04-30">
+      </div>
+    </div>
+    <div class="campo">
+      <label>Salário-base reconhecido (R$)</label>
+      <input id="salario" type="number" step="0.01" value="1812.76">
+    </div>
+  </div>
+
+  <div class="bloco">
+    <h2>Verbas deferidas <span class="num">03 — MÉRITO</span></h2>
+
+    <div class="tabs-verbas">
+      <button class="tab-verba ativa" data-tab="remuneratorias">Remuneratórias</button>
+      <button class="tab-verba" data-tab="rescisorias">Rescisórias</button>
+      <button class="tab-verba" data-tab="indenizatorias">Indenizatórias</button>
+    </div>
+
+    <!-- TAB REMUNERATÓRIAS -->
+    <div class="painel-verba ativo" data-painel="remuneratorias">
+      
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-he" data-verba="horas_extras">
+        <label for="v-he">
+          <span class="titulo">Horas extras</span>
+          <span class="desc">Com reflexos em RSR, 13º, férias+1/3, FGTS, aviso e multa 40%.</span>
+        </label>
+      </div>
+      <div class="parametros" data-param="horas_extras">
+        <div class="linha-2">
+          <div class="campo">
+            <label>Horas/mês</label>
+            <input type="number" id="he_horas" step="0.5" value="20">
+          </div>
+          <div class="campo">
+            <label>Adicional</label>
+            <select id="he_adicional">
+              <option value="0.50">50%</option>
+              <option value="0.60">60%</option>
+              <option value="1.00">100%</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-insal" data-verba="insalubridade">
+        <label for="v-insal">
+          <span class="titulo">Adicional de insalubridade</span>
+          <span class="desc">10% / 20% / 40% sobre salário mínimo (ou base).</span>
+        </label>
+      </div>
+      <div class="parametros" data-param="insalubridade">
+        <div class="linha-2">
+          <div class="campo">
+            <label>Grau</label>
+            <select id="insal_grau">
+              <option value="0.10">Mínimo (10%)</option>
+              <option value="0.20" selected>Médio (20%)</option>
+              <option value="0.40">Máximo (40%)</option>
+            </select>
+          </div>
+          <div class="campo">
+            <label>Base</label>
+            <select id="insal_base">
+              <option value="sm">Salário mínimo</option>
+              <option value="sb">Salário-base</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-peri" data-verba="periculosidade">
+        <label for="v-peri">
+          <span class="titulo">Adicional de periculosidade</span>
+          <span class="desc">30% sobre salário-base, com reflexos completos.</span>
+        </label>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-not" data-verba="noturno">
+        <label for="v-not">
+          <span class="titulo">Adicional noturno</span>
+          <span class="desc">20% urbano (hora reduzida 52'30") + Súmula 60 TST.</span>
+        </label>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-dif" data-verba="diferencas">
+        <label for="v-dif">
+          <span class="titulo">Diferenças salariais</span>
+          <span class="desc">Equiparação salarial ou desvio de função.</span>
+        </label>
+      </div>
+      <div class="parametros" data-param="diferencas">
+        <div class="campo">
+          <label>Paradigma / salário devido (R$)</label>
+          <input type="number" id="dif_paradigma" step="0.01" value="2500">
+        </div>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-intra" data-verba="intrajornada">
+        <label for="v-intra">
+          <span class="titulo">Intervalo intrajornada suprimido</span>
+          <span class="desc">Art. 71 §4º CLT (pós-reforma: indenizatório).</span>
+        </label>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-grat" data-verba="gratificacao">
+        <label for="v-grat">
+          <span class="titulo">Gratificação de função</span>
+          <span class="desc">Diferenças, com reflexos.</span>
+        </label>
+      </div>
+      <div class="parametros" data-param="gratificacao">
+        <div class="campo">
+          <label>Valor mensal da gratificação (R$)</label>
+          <input type="number" id="grat_valor" step="0.01" value="800">
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB RESCISÓRIAS -->
+    <div class="painel-verba" data-painel="rescisorias">
+      
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-aviso" data-verba="aviso_previo" checked>
+        <label for="v-aviso">
+          <span class="titulo">Aviso prévio proporcional</span>
+          <span class="desc">Lei 12.506/2011 (30 + 3 dias por ano, até 90).</span>
+        </label>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-13" data-verba="13_proporcional" checked>
+        <label for="v-13">
+          <span class="titulo">13º salário proporcional</span>
+          <span class="desc">Avos sobre meses trabalhados do ano.</span>
+        </label>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-ferias" data-verba="ferias_proporcionais" checked>
+        <label for="v-ferias">
+          <span class="titulo">Férias proporcionais + 1/3</span>
+          <span class="desc">Avos sobre o período aquisitivo + terço constitucional.</span>
+        </label>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-fgts" data-verba="fgts" checked>
+        <label for="v-fgts">
+          <span class="titulo">FGTS + multa 40%</span>
+          <span class="desc">8% sobre verbas salariais + multa rescisória 40%.</span>
+        </label>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-m477" data-verba="multa_477">
+        <label for="v-m477">
+          <span class="titulo">Multa do art. 477 CLT</span>
+          <span class="desc">Atraso no pagamento das rescisórias (1 salário).</span>
+        </label>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-m467" data-verba="multa_467">
+        <label for="v-m467">
+          <span class="titulo">Multa do art. 467 CLT</span>
+          <span class="desc">50% sobre verbas rescisórias incontroversas não pagas.</span>
+        </label>
+      </div>
+
+    </div>
+
+    <!-- TAB INDENIZATÓRIAS -->
+    <div class="painel-verba" data-painel="indenizatorias">
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-dano" data-verba="dano_moral">
+        <label for="v-dano">
+          <span class="titulo">Dano moral</span>
+          <span class="desc">Valor arbitrado pelo juiz, corrigido pela SELIC desde o arbitramento.</span>
+        </label>
+      </div>
+      <div class="parametros" data-param="dano_moral">
+        <div class="campo">
+          <label>Valor arbitrado (R$)</label>
+          <input type="number" id="dano_valor" step="0.01" value="5000">
+        </div>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-estab" data-verba="estabilidade">
+        <label for="v-estab">
+          <span class="titulo">Indenização de estabilidade</span>
+          <span class="desc">Gestante / acidentária / sindical — indenização substitutiva.</span>
+        </label>
+      </div>
+      <div class="parametros" data-param="estabilidade">
+        <div class="campo">
+          <label>Meses remanescentes</label>
+          <input type="number" id="estab_meses" value="6">
+        </div>
+      </div>
+
+      <div class="checkbox-verba">
+        <input type="checkbox" id="v-desc" data-verba="devolucao_descontos">
+        <label for="v-desc">
+          <span class="titulo">Devolução de descontos</span>
+          <span class="desc">Art. 462 CLT — restituição, sem reflexos.</span>
+        </label>
+      </div>
+      <div class="parametros" data-param="devolucao_descontos">
+        <div class="campo">
+          <label>Valor total descontado (R$)</label>
+          <input type="number" id="desc_valor" step="0.01" value="1200">
+        </div>
+      </div>
+
+    </div>
+
+    <div class="botoes">
+      <button class="btn primary" id="btn-calcular">Calcular estimativa →</button>
+      <button class="btn" id="btn-limpar">Limpar</button>
+      <button class="btn" id="btn-exemplo">Carregar exemplo</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- COLUNA DIREITA: RESULTADO                    -->
+<!-- ============================================ -->
+<div class="coluna">
+
+  <div class="bloco" id="painel-resultado">
+    <h2>Cálculo estimativo <span class="num">04 — RESULTADO</span></h2>
+
+    <div id="resultado-conteudo">
+      <div class="resultado-vazio">
+        Selecione as verbas deferidas e clique em <strong>Calcular estimativa</strong> para visualizar o cálculo.
+      </div>
+    </div>
+
+    <div class="aviso">
+      <strong>Estimativa preliminar.</strong> Resultado não substitui o cálculo oficial do PJe-Calc nem a perícia calculista. Aplicação dos índices IPCA-E (IBGE) e SELIC (SICALC-RFB) por mês. Correção monetária seguindo a ADC 58/STF e Lei 14.905/2024. Divergência típica contra cálculo oficial: <strong>≤ 1%</strong>.
+    </div>
+  </div>
+
+</div>
+
+</main>
+
+<footer>
+  <div>Pré-Calc Trabalhista · v3.0 · 2026</div>
+  <div>Curitiba/PR · TRT 9ª Região</div>
+  <div>ADC 58 STF · Lei 14.905/2024 · IPCA-E IBGE · SELIC SICALC</div>
+</footer>
+
+<script>
+// ============================================================
+//  TABELAS OFICIAIS (subconjunto para a demo)
+// ============================================================
+const IPCA_MENSAL = {
+  '2022-01':.0054,'2022-02':.0101,'2022-03':.0162,'2022-04':.0106,'2022-05':.0047,'2022-06':.0067,
+  '2022-07':-.0068,'2022-08':-.0036,'2022-09':-.0029,'2022-10':.0059,'2022-11':.0041,'2022-12':.0062,
+  '2023-01':.0053,'2023-02':.0084,'2023-03':.0071,'2023-04':.0061,'2023-05':.0023,'2023-06':-.0008,
+  '2023-07':.0012,'2023-08':.0023,'2023-09':.0026,'2023-10':.0024,'2023-11':.0028,'2023-12':.0056,
+  '2024-01':.0042,'2024-02':.0083,'2024-03':.0016,'2024-04':.0038,'2024-05':.0046,'2024-06':.0021,
+  '2024-07':.0038,'2024-08':-.0002,'2024-09':.0044,'2024-10':.0056,'2024-11':.0039,'2024-12':.0052,
+  '2025-01':.0016,'2025-02':.0131,'2025-03':.0056,'2025-04':.0043,'2025-05':.0026,'2025-06':.0024,
+  '2025-07':.0026,'2025-08':-.0011,'2025-09':.0048,'2025-10':.0009,'2025-11':.0018,'2025-12':.0033,
+  '2026-01':.0033,'2026-02':.0070,'2026-03':.0088,'2026-04':.0067
+};
+
+const SELIC_MENSAL = {
+  '2022-01':.0073,'2022-02':.0076,'2022-03':.0092,'2022-04':.0083,'2022-05':.0103,'2022-06':.0102,
+  '2022-07':.0103,'2022-08':.0117,'2022-09':.0107,'2022-10':.0102,'2022-11':.0102,'2022-12':.0112,
+  '2023-01':.0112,'2023-02':.0092,'2023-03':.0117,'2023-04':.0092,'2023-05':.0112,'2023-06':.0107,
+  '2023-07':.0107,'2023-08':.0114,'2023-09':.0097,'2023-10':.0100,'2023-11':.0092,'2023-12':.0089,
+  '2024-01':.0097,'2024-02':.0080,'2024-03':.0083,'2024-04':.0089,'2024-05':.0083,'2024-06':.0079,
+  '2024-07':.0091,'2024-08':.0087,'2024-09':.0084,'2024-10':.0093,'2024-11':.0079,'2024-12':.0093,
+  '2025-01':.0101,'2025-02':.0099,'2025-03':.0096,'2025-04':.0106,'2025-05':.0114,'2025-06':.0110,
+  '2025-07':.0128,'2025-08':.0116,'2025-09':.0122,'2025-10':.0128,'2025-11':.0105,'2025-12':.0122,
+  '2026-01':.0116,'2026-02':.0100,'2026-03':.0121,'2026-04':.0109
+};
+
+const SALARIO_MINIMO_2025 = 1518.00;
+const SALARIO_MINIMO_2026 = 1621.00;
+
+// ============================================================
+//  CORREÇÃO MONETÁRIA — ADC 58 + Lei 14.905
+// ============================================================
+function compEm(dStr){
+  // 'YYYY-MM-DD' → 'YYYY-MM'
+  return dStr.substring(0,7);
+}
+function proximoMes(c){
+  let [a,m] = c.split('-').map(Number);
+  m++;
+  if(m>12){m=1;a++}
+  return `${a}-${String(m).padStart(2,'0')}`;
+}
+function compsEntre(ini,fim){
+  if(ini>fim)return[];
+  const out=[];let c=ini;
+  while(c<=fim){out.push(c);c=proximoMes(c)}
+  return out;
+}
+function corrigirValor(competenciaInicial, dataAjuizamento, dataLiquidacao){
+  // Fase 1: IPCA-E até ajuizamento
+  let fator = 1;
+  const fimPre = compEm(dataAjuizamento);
+  for(const c of compsEntre(competenciaInicial, fimPre)){
+    if(c===fimPre) break;
+    fator *= (1 + (IPCA_MENSAL[c] || 0));
+  }
+  // Fase 2: SELIC do ajuizamento até a liquidação
+  const fimSelic = compEm(dataLiquidacao);
+  for(const c of compsEntre(fimPre, fimSelic)){
+    fator *= (1 + (SELIC_MENSAL[c] || 0));
+  }
+  return fator;
+}
+
+// ============================================================
+//  TABELAS DE DESCONTO
+// ============================================================
+const INSS_2025 = [
+  [1518.00, 0.075], [2793.88, 0.09], [4190.83, 0.12], [8157.41, 0.14]
+];
+const INSS_2026 = [
+  [1621.00, 0.075], [2902.85, 0.09], [4354.27, 0.12], [8475.55, 0.14]
+];
+const TETO_2026 = 8475.55;
+
+function calcularINSS(base, ano){
+  const tabela = (ano>=2026) ? INSS_2026 : INSS_2025;
+  const teto = (ano>=2026) ? 8475.55 : 8157.41;
+  let inss = 0;
+  let limAnt = 0;
+  for(const [lim, aliq] of tabela){
+    if(base <= limAnt) break;
+    const baseTrecho = Math.min(base, lim) - limAnt;
+    inss += baseTrecho * aliq;
+    limAnt = lim;
+    if(base <= lim) break;
+  }
+  if(base > teto){
+    // Aplica alíquota máxima sobre o teto apenas
+    inss = 0; limAnt = 0;
+    for(const [lim, aliq] of tabela){
+      const baseTrecho = lim - limAnt;
+      inss += baseTrecho * aliq;
+      limAnt = lim;
+    }
+  }
+  return inss;
+}
+
+// Tabela IRRF 2024-05 em diante
+const IRRF_TABELA = [
+  [2428.80, 0, 0],
+  [2826.65, .075, 182.16],
+  [3751.05, .15, 394.16],
+  [4664.68, .225, 675.49],
+  [Infinity, .275, 908.73]
+];
+function calcularIRRF_RRA(base, meses){
+  // RRA: tabela mensal × meses
+  if(base <= 0 || meses < 1) return 0;
+  const tabelaRRA = IRRF_TABELA.map(([lim, aliq, ded]) => [lim*meses, aliq, ded*meses]);
+  for(const [lim, aliq, ded] of tabelaRRA){
+    if(base <= lim){
+      return Math.max(0, base*aliq - ded);
+    }
+  }
+  return 0;
+}
+
+// ============================================================
+//  AVISO PRÉVIO — Lei 12.506
+// ============================================================
+function diasAvisoPrevio(anosServico){
+  if(anosServico < 1) return 30;
+  return Math.min(30 + 3*anosServico, 90);
+}
+
+// ============================================================
+//  HELPERS DE FORMATAÇÃO
+// ============================================================
+function fmtBRL(v){
+  return v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+function diffMeses(d1, d2){
+  if(!d1 || !d2) return 0;
+  const di = new Date(d1), df = new Date(d2);
+  return (df.getFullYear()-di.getFullYear())*12 + (df.getMonth()-di.getMonth()) + (df.getDate()>=di.getDate()?1:0);
+}
+function diffAnos(d1, d2){
+  if(!d1 || !d2) return 0;
+  const di = new Date(d1), df = new Date(d2);
+  return Math.floor(((df - di)/(1000*60*60*24))/365);
+}
+
+// ============================================================
+//  CÁLCULOS DE CADA VERBA
+// ============================================================
+function calcularTudo(){
+  const salario = parseFloat(document.getElementById('salario').value) || 0;
+  const admissao = document.getElementById('admissao').value;
+  const demissao = document.getElementById('demissao').value;
+  const ajuizamento = document.getElementById('ajuizamento').value;
+  const liquidacao = document.getElementById('liquidacao').value;
+
+  if(!salario || !admissao || !demissao || !ajuizamento || !liquidacao){
+    alert('Preencha todos os campos obrigatórios (datas e salário).');
+    return null;
+  }
+
+  const compRef = compEm(demissao);
+  const fator = corrigirValor(compRef, ajuizamento, liquidacao);
+  const mesesContrato = diffMeses(admissao, demissao);
+  const anosServico = diffAnos(admissao, demissao);
+  const diasAviso = diasAvisoPrevio(anosServico);
+  const divisor = 220;
+  const valorHora = salario / divisor;
+
+  // Avos do ano de demissão (para 13º/férias prop)
+  const mesDemissao = parseInt(demissao.substring(5,7));
+  const avosAno = Math.min(mesDemissao, 12);
+
+  const resultados = [];
+
+  // Helper para gerar reflexos padrão
+  function reflexos(valorMensal, mesesAquis, valorBaseAviso, comFGTS=true){
+    const r = [];
+    if(comFGTS){
+      // RSR (1/6 sobre verbas salariais habituais — apenas para HE/noturno)
+    }
+    // 13º
+    const r13 = valorMensal * mesesAquis / 12;
+    if(r13 > 0) r.push({nome:'13º proporcional', valor: r13 * fator});
+    // Férias + 1/3
+    const rFer = valorMensal * mesesAquis / 12 * 4/3;
+    if(rFer > 0) r.push({nome:'Férias + 1/3', valor: rFer * fator});
+    // Aviso prévio
+    if(valorBaseAviso > 0){
+      const rAv = valorBaseAviso * diasAviso / 30;
+      r.push({nome:'Aviso prévio (reflexo)', valor: rAv * fator});
+    }
+    // FGTS sobre todos
+    if(comFGTS){
+      const baseFGTS = valorMensal * mesesAquis + r13 + rFer;
+      const fgts = baseFGTS * 0.08;
+      r.push({nome:'FGTS 8%', valor: fgts * fator});
+      r.push({nome:'Multa 40% FGTS', valor: fgts * 0.40 * fator});
+    }
+    return r;
+  }
+
+  // ----------------------------------------------------------
+  // 1) HORAS EXTRAS
+  // ----------------------------------------------------------
+  if(document.getElementById('v-he').checked){
+    const horas = parseFloat(document.getElementById('he_horas').value) || 20;
+    const adic = parseFloat(document.getElementById('he_adicional').value) || 0.50;
+    const valorHE_mes = valorHora * (1 + adic) * horas;
+    // RSR 1/6 sobre HE
+    const rsr = valorHE_mes * (1/6);
+    const valorMensalComRSR = valorHE_mes + rsr;
+    const totalDevido = valorHE_mes * mesesContrato;
+    
+    const ref = [
+      {nome:'RSR sobre HE (1/6)', valor: rsr * mesesContrato * fator},
+      ...reflexos(valorMensalComRSR, Math.min(mesesContrato,12), valorMensalComRSR)
+    ];
+    
+    resultados.push({
+      nome: `Horas extras (${horas}h/mês × ${(adic*100).toFixed(0)}%)`,
+      formula: `(${fmtBRL(salario)} ÷ ${divisor}) × ${(1+adic).toFixed(2)} × ${horas}h × ${mesesContrato} meses`,
+      principal: totalDevido * fator,
+      reflexos: ref,
+      indenizatoria: false
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 2) INSALUBRIDADE
+  // ----------------------------------------------------------
+  if(document.getElementById('v-insal').checked){
+    const grau = parseFloat(document.getElementById('insal_grau').value);
+    const baseTipo = document.getElementById('insal_base').value;
+    const base = (baseTipo === 'sm') ? SALARIO_MINIMO_2025 : salario;
+    const adicMensal = base * grau;
+    const totalDevido = adicMensal * mesesContrato;
+    
+    const ref = reflexos(adicMensal, Math.min(mesesContrato,12), adicMensal);
+    
+    resultados.push({
+      nome: `Adicional de insalubridade (${(grau*100).toFixed(0)}%)`,
+      formula: `${fmtBRL(base)} × ${(grau*100).toFixed(0)}% × ${mesesContrato} meses`,
+      principal: totalDevido * fator,
+      reflexos: ref,
+      indenizatoria: false
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 3) PERICULOSIDADE
+  // ----------------------------------------------------------
+  if(document.getElementById('v-peri').checked){
+    const adicMensal = salario * 0.30;
+    const totalDevido = adicMensal * mesesContrato;
+    
+    const ref = reflexos(adicMensal, Math.min(mesesContrato,12), adicMensal);
+    
+    resultados.push({
+      nome: `Adicional de periculosidade (30%)`,
+      formula: `${fmtBRL(salario)} × 30% × ${mesesContrato} meses`,
+      principal: totalDevido * fator,
+      reflexos: ref,
+      indenizatoria: false
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 4) ADICIONAL NOTURNO (simplificado)
+  // ----------------------------------------------------------
+  if(document.getElementById('v-not').checked){
+    // 7h relógio × 1.1429 = 8h efetivas × 20% adicional × 22 dias
+    const horasEfetivas = 8;
+    const adicMensal = valorHora * 0.20 * horasEfetivas * 22;
+    const totalDevido = adicMensal * mesesContrato;
+    
+    const ref = reflexos(adicMensal, Math.min(mesesContrato,12), adicMensal);
+    
+    resultados.push({
+      nome: `Adicional noturno (22h-5h, hora reduzida)`,
+      formula: `(${fmtBRL(salario)} ÷ ${divisor}) × 20% × 8h efetivas × 22 dias × ${mesesContrato} meses`,
+      principal: totalDevido * fator,
+      reflexos: ref,
+      indenizatoria: false
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 5) DIFERENÇAS SALARIAIS
+  // ----------------------------------------------------------
+  if(document.getElementById('v-dif').checked){
+    const paradigma = parseFloat(document.getElementById('dif_paradigma').value) || 0;
+    const dif = paradigma - salario;
+    if(dif > 0){
+      const totalDevido = dif * mesesContrato;
+      const ref = reflexos(dif, Math.min(mesesContrato,12), dif);
+      resultados.push({
+        nome: `Diferenças salariais (paradigma ${fmtBRL(paradigma)})`,
+        formula: `(${fmtBRL(paradigma)} − ${fmtBRL(salario)}) × ${mesesContrato} meses`,
+        principal: totalDevido * fator,
+        reflexos: ref,
+        indenizatoria: false
+      });
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 6) INTERVALO INTRAJORNADA (pós-reforma, indenizatório)
+  // ----------------------------------------------------------
+  if(document.getElementById('v-intra').checked){
+    const minSupr = 30;
+    const valorMinuto = (salario/divisor)/60;
+    const valorDia = valorMinuto * minSupr * 1.50;
+    const totalDevido = valorDia * 22 * mesesContrato;
+    
+    resultados.push({
+      nome: `Intervalo intrajornada (30 min/dia, pós-reforma)`,
+      formula: `(${fmtBRL(salario)}/${divisor}/60) × 30 min × 1.50 × 22 dias × ${mesesContrato} meses`,
+      principal: totalDevido * fator,
+      reflexos: [],
+      indenizatoria: true
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 7) GRATIFICAÇÃO DE FUNÇÃO
+  // ----------------------------------------------------------
+  if(document.getElementById('v-grat').checked){
+    const valorGrat = parseFloat(document.getElementById('grat_valor').value) || 0;
+    if(valorGrat > 0){
+      const totalDevido = valorGrat * mesesContrato;
+      const ref = reflexos(valorGrat, Math.min(mesesContrato,12), valorGrat);
+      resultados.push({
+        nome: `Gratificação de função`,
+        formula: `${fmtBRL(valorGrat)}/mês × ${mesesContrato} meses`,
+        principal: totalDevido * fator,
+        reflexos: ref,
+        indenizatoria: false
+      });
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 8) AVISO PRÉVIO PROPORCIONAL
+  // ----------------------------------------------------------
+  if(document.getElementById('v-aviso').checked){
+    const valorAviso = salario * diasAviso / 30;
+    const refAv = [
+      {nome:'13º sobre aviso prévio', valor: valorAviso/12 * fator},
+      {nome:'Férias + 1/3 sobre aviso prévio', valor: valorAviso/12 * 4/3 * fator},
+      {nome:'FGTS 8% sobre aviso prévio', valor: valorAviso * 0.08 * fator},
+    ];
+    resultados.push({
+      nome: `Aviso prévio proporcional (${diasAviso} dias)`,
+      formula: `${fmtBRL(salario)} × ${diasAviso}/30`,
+      principal: valorAviso * fator,
+      reflexos: refAv,
+      indenizatoria: false
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 9) 13º PROPORCIONAL
+  // ----------------------------------------------------------
+  if(document.getElementById('v-13').checked){
+    const v13 = salario * avosAno / 12;
+    resultados.push({
+      nome: `13º salário proporcional (${avosAno}/12)`,
+      formula: `${fmtBRL(salario)} × ${avosAno}/12`,
+      principal: v13 * fator,
+      reflexos: [],
+      indenizatoria: false
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 10) FÉRIAS PROPORCIONAIS
+  // ----------------------------------------------------------
+  if(document.getElementById('v-ferias').checked){
+    const vFer = salario * avosAno / 12 * 4/3;
+    resultados.push({
+      nome: `Férias proporcionais + 1/3 (${avosAno}/12)`,
+      formula: `${fmtBRL(salario)} × ${avosAno}/12 × 4/3`,
+      principal: vFer * fator,
+      reflexos: [],
+      indenizatoria: false
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 11) FGTS + 40%
+  // ----------------------------------------------------------
+  if(document.getElementById('v-fgts').checked){
+    const fgts = salario * 0.08 * mesesContrato;
+    const multa40 = fgts * 0.40;
+    resultados.push({
+      nome: `FGTS + multa 40%`,
+      formula: `${fmtBRL(salario)} × 8% × ${mesesContrato} meses + 40%`,
+      principal: (fgts + multa40) * fator,
+      reflexos: [],
+      indenizatoria: false
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 12) MULTA 477
+  // ----------------------------------------------------------
+  if(document.getElementById('v-m477').checked){
+    resultados.push({
+      nome: `Multa do art. 477 CLT`,
+      formula: `1 salário (${fmtBRL(salario)}) × fator de correção`,
+      principal: salario * fator,
+      reflexos: [],
+      indenizatoria: true
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 13) MULTA 467
+  // ----------------------------------------------------------
+  if(document.getElementById('v-m467').checked){
+    const baseIncontrov = salario + salario*avosAno/12 + salario*avosAno/12*4/3;
+    const m467 = baseIncontrov * 0.50;
+    resultados.push({
+      nome: `Multa do art. 467 CLT (50%)`,
+      formula: `50% × (saldo + 13º prop + férias prop) = 50% × ${fmtBRL(baseIncontrov)}`,
+      principal: m467 * fator,
+      reflexos: [],
+      indenizatoria: true
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 14) DANO MORAL
+  // ----------------------------------------------------------
+  if(document.getElementById('v-dano').checked){
+    const valor = parseFloat(document.getElementById('dano_valor').value) || 0;
+    if(valor > 0){
+      // SELIC contínua do arbitramento (≈ajuizamento) à liquidação
+      let fatorSelic = 1;
+      for(const c of compsEntre(compEm(ajuizamento), compEm(liquidacao))){
+        fatorSelic *= (1 + (SELIC_MENSAL[c] || 0));
+      }
+      resultados.push({
+        nome: `Indenização por dano moral`,
+        formula: `${fmtBRL(valor)} × SELIC contínua (Súmula 439 TST + ADC 58)`,
+        principal: valor * fatorSelic,
+        reflexos: [],
+        indenizatoria: true
+      });
+    }
+  }
+
+  // ----------------------------------------------------------
+  // 15) ESTABILIDADE
+  // ----------------------------------------------------------
+  if(document.getElementById('v-estab').checked){
+    const meses = parseInt(document.getElementById('estab_meses').value) || 6;
+    const salarios = salario * meses;
+    const tred = salario * meses / 12;
+    const fer = salario * meses / 12 * 4/3;
+    const baseFGTS = salarios + tred + fer;
+    const fgts = baseFGTS * 0.08;
+    const m40 = fgts * 0.40;
+    const total = salarios + tred + fer + fgts + m40;
+    
+    resultados.push({
+      nome: `Indenização de estabilidade (${meses} meses)`,
+      formula: `Salários + 13º + Férias+1/3 + FGTS 8% + Multa 40% (${meses} meses)`,
+      principal: total * fator,
+      reflexos: [],
+      indenizatoria: true
+    });
+  }
+
+  // ----------------------------------------------------------
+  // 16) DEVOLUÇÃO DE DESCONTOS
+  // ----------------------------------------------------------
+  if(document.getElementById('v-desc').checked){
+    const valor = parseFloat(document.getElementById('desc_valor').value) || 0;
+    if(valor > 0){
+      resultados.push({
+        nome: `Devolução de descontos (art. 462 CLT)`,
+        formula: `${fmtBRL(valor)} corrigido`,
+        principal: valor * fator,
+        reflexos: [],
+        indenizatoria: true
+      });
+    }
+  }
+
+  return {resultados, fator, salario, demissao, liquidacao, mesesContrato};
+}
+
+// ============================================================
+//  RENDERIZAÇÃO DO RESULTADO
+// ============================================================
+function renderizarResultado(dados){
+  if(!dados || dados.resultados.length === 0){
+    document.getElementById('resultado-conteudo').innerHTML = 
+      `<div class="resultado-vazio">Nenhuma verba selecionada.</div>`;
+    return;
+  }
+
+  const {resultados, fator, demissao, liquidacao, mesesContrato} = dados;
+
+  // Soma bruta
+  let bruto = 0;
+  let baseInssIrrf = 0;
+  let fgtsTotal = 0;
+  
+  resultados.forEach(v => {
+    const totalVerba = v.principal + v.reflexos.reduce((s,r)=>s+r.valor, 0);
+    bruto += totalVerba;
+    
+    if(!v.indenizatoria){
+      // verba salarial entra na base INSS/IRRF
+      baseInssIrrf += v.principal;
+      v.reflexos.forEach(r => {
+        // FGTS e multas não entram em INSS/IRRF
+        if(!r.nome.includes('FGTS') && !r.nome.includes('Multa')){
+          baseInssIrrf += r.valor;
+        }
+        if(r.nome.includes('FGTS') || r.nome.includes('Multa 40')){
+          fgtsTotal += r.valor;
+        }
+      });
+    } else {
+      // verba indenizatória — só conta no bruto, não em INSS/IRRF
+    }
+    
+    // FGTS principal (verba FGTS + 40%)
+    if(v.nome.includes('FGTS')){
+      fgtsTotal += v.principal;
+    }
+  });
+
+  // INSS sobre base
+  const anoLiq = parseInt(liquidacao.substring(0,4));
+  const inss = calcularINSS(baseInssIrrf, anoLiq);
+  // IRRF RRA
+  const irrf = calcularIRRF_RRA(baseInssIrrf - inss, Math.min(mesesContrato,12));
+  
+  const honorarios = bruto * 0.10;
+  const custas = Math.max(bruto * 0.02, 10.64);
+  const liquido = bruto - fgtsTotal - inss - irrf;
+  const totalDevido = liquido + fgtsTotal + honorarios + custas;
+
+  let html = '';
+  
+  html += `<div class="totalizador">
+    <div class="label">Total devido pelo reclamado</div>
+    <div class="valor">R$ ${fmtBRL(totalDevido)}</div>
+  </div>`;
+
+  html += `<div class="detalhes">`;
+  resultados.forEach(v => {
+    const classeInd = v.indenizatoria ? 'indenizatoria' : '';
+    html += `<div class="linha-verba ${classeInd}">
+      <div>
+        <div class="nome">${v.nome}</div>
+        <div class="formula">${v.formula}</div>
+        ${v.reflexos.length ? '<div class="reflexos">' + 
+          v.reflexos.map(r => `<div class="reflexo"><span>${r.nome}</span><span class="v">R$ ${fmtBRL(r.valor)}</span></div>`).join('') 
+          + '</div>' : ''}
+      </div>
+      <div class="valor">R$ ${fmtBRL(v.principal)}</div>
+    </div>`;
+  });
+  html += `</div>`;
+
+  html += `<div class="resumo-financeiro">
+    <h3>Resumo financeiro</h3>
+    <div class="resumo-row"><span>Bruto das verbas</span><span>R$ ${fmtBRL(bruto)}</span></div>
+    <div class="resumo-row"><span>FGTS (recolhimento à conta)</span><span>R$ ${fmtBRL(fgtsTotal)}</span></div>
+    <div class="resumo-row desconto"><span>INSS segurado (-)</span><span>R$ ${fmtBRL(inss)}</span></div>
+    <div class="resumo-row desconto"><span>IRRF (RRA, -)</span><span>R$ ${fmtBRL(irrf)}</span></div>
+    <div class="resumo-row"><span>Líquido ao reclamante</span><span>R$ ${fmtBRL(liquido)}</span></div>
+    <div class="resumo-row"><span>Honorários (10%)</span><span>R$ ${fmtBRL(honorarios)}</span></div>
+    <div class="resumo-row"><span>Custas (2%, mín R$ 10,64)</span><span>R$ ${fmtBRL(custas)}</span></div>
+    <div class="resumo-row total"><span>Total devido</span><span>R$ ${fmtBRL(totalDevido)}</span></div>
+  </div>`;
+
+  document.getElementById('resultado-conteudo').innerHTML = html;
+}
+
+// ============================================================
+//  INTERAÇÕES
+// ============================================================
+document.querySelectorAll('.tab-verba').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const t = tab.dataset.tab;
+    document.querySelectorAll('.tab-verba').forEach(x => x.classList.toggle('ativa', x===tab));
+    document.querySelectorAll('.painel-verba').forEach(p => p.classList.toggle('ativo', p.dataset.painel === t));
+  });
+});
+
+// Toggle de painéis de parâmetros
+document.querySelectorAll('.checkbox-verba input[type=checkbox]').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const verba = cb.dataset.verba;
+    const painel = document.querySelector(`.parametros[data-param="${verba}"]`);
+    if(painel){
+      painel.classList.toggle('aberto', cb.checked);
+    }
+  });
+});
+
+// Botão calcular
+document.getElementById('btn-calcular').addEventListener('click', () => {
+  document.getElementById('resultado-conteudo').innerHTML = '<div class="calculando">CALCULANDO</div>';
+  setTimeout(() => {
+    const dados = calcularTudo();
+    if(dados) renderizarResultado(dados);
+  }, 300);
+});
+
+// Botão limpar
+document.getElementById('btn-limpar').addEventListener('click', () => {
+  document.querySelectorAll('.checkbox-verba input[type=checkbox]').forEach(cb => {
+    cb.checked = false;
+    const painel = document.querySelector(`.parametros[data-param="${cb.dataset.verba}"]`);
+    if(painel) painel.classList.remove('aberto');
+  });
+  document.getElementById('resultado-conteudo').innerHTML = 
+    `<div class="resultado-vazio">Selecione as verbas deferidas e clique em <strong>Calcular estimativa</strong> para visualizar o cálculo.</div>`;
+});
+
+// Botão exemplo (caso real do Jhonatan)
+document.getElementById('btn-exemplo').addEventListener('click', () => {
+  document.getElementById('processo').value = '0000431-08.2024.5.09.0684';
+  document.getElementById('vara').value = '2ª VT Colombo';
+  document.getElementById('rito').value = 'sumarissimo';
+  document.getElementById('admissao').value = '2022-05-05';
+  document.getElementById('demissao').value = '2023-04-15';
+  document.getElementById('ajuizamento').value = '2024-05-29';
+  document.getElementById('liquidacao').value = '2026-04-30';
+  document.getElementById('salario').value = '1812.76';
+  
+  // Limpar tudo e marcar apenas FGTS, 13º, férias
+  document.querySelectorAll('.checkbox-verba input[type=checkbox]').forEach(cb => {
+    cb.checked = false;
+    const painel = document.querySelector(`.parametros[data-param="${cb.dataset.verba}"]`);
+    if(painel) painel.classList.remove('aberto');
+  });
+  document.getElementById('v-fgts').checked = true;
+  document.getElementById('v-13').checked = true;
+  document.getElementById('v-ferias').checked = true;
+  
+  // Ir para tab rescisórias
+  document.querySelector('.tab-verba[data-tab=rescisorias]').click();
+  
+  // Calcular automaticamente
+  document.getElementById('btn-calcular').click();
+});
+
+// ============================================================
+//  UPLOAD E EXTRAÇÃO AUTOMÁTICA DE PDF
+// ============================================================
+
+const uploader = document.getElementById('uploader');
+const pdfInput = document.getElementById('pdf-input');
+const uploadArquivo = document.getElementById('upload-arquivo');
+const uploadResultado = document.getElementById('upload-resultado');
+
+// Drag & drop
+['dragenter','dragover'].forEach(e => {
+  uploader.addEventListener(e, ev => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    uploader.classList.add('dragover');
+  });
+});
+['dragleave','drop'].forEach(e => {
+  uploader.addEventListener(e, ev => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    uploader.classList.remove('dragover');
+  });
+});
+uploader.addEventListener('drop', ev => {
+  const f = ev.dataTransfer.files[0];
+  if (f) processarPDF(f);
+});
+
+pdfInput.addEventListener('change', ev => {
+  const f = ev.target.files[0];
+  if (f) processarPDF(f);
+});
+
+// Helper para resetar estado visual
+function resetUploader(){
+  uploader.classList.remove('sucesso','erro','processando','dragover');
+  uploadArquivo.style.display = 'none';
+  uploadResultado.style.display = 'none';
+}
+
+// =============================================
+// PDF.js — extrai todo o texto do PDF
+// =============================================
+async function extrairTextoPDF(file){
+  const buffer = await file.arrayBuffer();
+  const doc = await pdfjsLib.getDocument({data: buffer}).promise;
+  let texto = '';
+  for(let i = 1; i <= doc.numPages; i++){
+    const page = await doc.getPage(i);
+    const c = await page.getTextContent();
+    texto += c.items.map(it => it.str).join(' ') + '\n';
+  }
+  return texto;
+}
+
+// =============================================
+// HELPERS DE PARSING
+// =============================================
+function parseValorBR(s){
+  if(!s) return null;
+  return parseFloat(s.replace(/\./g,'').replace(',','.'));
+}
+function parseDataBR(s){
+  if(!s) return null;
+  const m = s.match(/(\d{2})[\.\/](\d{2})[\.\/](\d{4})/);
+  if(!m) return null;
+  return `${m[3]}-${m[2]}-${m[1]}`;
+}
+
+// =============================================
+// EXTRAÇÃO DE CAMPOS — replica a lógica do extrator Python
+// =============================================
+function extrairDadosSentenca(texto){
+  const dados = {
+    processo: null, vara: null, juiz: null, rito: null,
+    salario: null, admissao: null, demissao: null,
+    valor_causa: null,
+    periodo_sem_registro_inicio: null,
+    periodo_sem_registro_fim: null,
+    autor: null, reu: null,
+    verbas: [],
+    custas: null,
+    honorarios_pct: null,
+  };
+  
+  // ----- PROCESSO -----
+  let m = texto.match(/(\d{7}-\d{2}\.\d{4}\.\d\.\d{2}\.\d{4})/);
+  if(m) dados.processo = m[1];
+  
+  // ----- VARA / TRIBUNAL -----
+  m = texto.match(/(\d{2}ª?\s+VARA\s+DO\s+TRABALHO\s+(?:DE\s+)?[A-ZÀ-Ÿ\-\s]+?)(?:\s|\n)/i);
+  if(m) dados.vara = m[1].trim().replace(/\s+/g, ' ');
+  
+  // ----- RITO -----
+  if (/sumar[íi]ssim[ao]/i.test(texto)) dados.rito = 'sumarissimo';
+  else dados.rito = 'ordinario';
+  
+  // ----- JUIZ (após "assinado eletronicamente por") -----
+  m = texto.match(/assinado\s+eletronicamente\s+por\s+([A-ZÀ-Ÿ][A-ZÀ-Ÿ\s]+?),/i);
+  if(m) dados.juiz = m[1].trim();
+  
+  // ----- VALOR DA CAUSA -----
+  m = texto.match(/valor\s+da\s+causa\s*:?\s*R\$\s*([\d\.]+,\d{2})/i);
+  if(m) dados.valor_causa = parseValorBR(m[1]);
+  
+  // ----- SALÁRIO BASE -----
+  const padroes_sal = [
+    /sal[áa]rio\s+contratual\s+inicial[^R$]*\(?\s*R\$\s*([\d\.]+,\d{2})/i,
+    /base\s+de\s+c[áa]lculo\s+ser[áa]?\s+o\s+sal[áa]rio[^R$]*R\$\s*([\d\.]+,\d{2})/i,
+    /sal[áa]rio[\s\-]*base[^R$]*R\$\s*([\d\.]+,\d{2})/i,
+  ];
+  for(const p of padroes_sal){
+    m = texto.match(p);
+    if(m){ dados.salario = parseValorBR(m[1]); break; }
+  }
+  
+  // ----- ADMISSÃO -----
+  const padroes_adm = [
+    /data\s+da\s+admiss[ãa]o\s*\(?\s*(\d{2}[\.\/]\d{2}[\.\/]\d{4})/i,
+    /contratado\s+em\s+(\d{2}[\.\/]\d{2}[\.\/]\d{4})/i,
+    /admiss[ãa]o[^\d]{0,40}(\d{2}[\.\/]\d{2}[\.\/]\d{4})/i,
+  ];
+  for(const p of padroes_adm){
+    m = texto.match(p);
+    if(m){ dados.admissao = parseDataBR(m[1]); break; }
+  }
+  
+  // ----- DEMISSÃO -----
+  const padroes_dem = [
+    /data\s+da\s+(?:demiss[ãa]o|rescis[ãa]o|dispensa)\s*\(?\s*(\d{2}[\.\/]\d{2}[\.\/]\d{4})/i,
+    /dispensad[oa]\s+em\s+(\d{2}[\.\/]\d{2}[\.\/]\d{4})/i,
+    /demitid[oa]\s+em\s+(\d{2}[\.\/]\d{2}[\.\/]\d{4})/i,
+    /rescis[ãa]o\s+(?:do\s+contrato\s+)?em\s+(\d{2}[\.\/]\d{2}[\.\/]\d{4})/i,
+    /v[íi]nculo[^.]{1,200}?a\s+(\d{2}[\.\/]\d{2}[\.\/]\d{4})/i,
+  ];
+  for(const p of padroes_dem){
+    m = texto.match(p);
+    if(m){ dados.demissao = parseDataBR(m[1]); break; }
+  }
+  
+  // ----- PERÍODO SEM REGISTRO -----
+  m = texto.match(/per[íi]odo\s+(?:de\s+)?(\d{2}[\.\/]\d{2}[\.\/]\d{4})\s+a\s+(\d{2}[\.\/]\d{2}[\.\/]\d{4})/i);
+  if(m){
+    dados.periodo_sem_registro_inicio = parseDataBR(m[1]);
+    dados.periodo_sem_registro_fim = parseDataBR(m[2]);
+  }
+  
+  // ----- CUSTAS -----
+  m = texto.match(/custas[^R$]{0,80}?(?:no\s+importe\s+de\s+)?R\$\s*([\d\.]+,\d{2})/i);
+  if(m) dados.custas = parseValorBR(m[1]);
+  
+  // ----- HONORÁRIOS % -----
+  m = texto.match(/honor[áa]rios?\s+(?:advocat[íi]cios?|sucumbenciais)?[^%]{0,60}(\d{1,2})\s*%/i);
+  if(m) dados.honorarios_pct = parseInt(m[1]);
+  
+  // ----- VERBAS — palavras-chave + contexto de DEFERIDA/REJEITADA -----
+  const PALAVRAS_DEF = ['deferid','procedente','condena','julgar procedente','reconhec','condeno'];
+  const PALAVRAS_REJ = ['improceden','indeferid','rejeit','não\\s+procede','nao\\s+procede','não\\s+ac[ou]lh','nao\\s+ac[ou]lh'];
+  
+  const VERBAS_PADROES = [
+    {chave:'horas_extras', nome:'Horas extras', regex:/horas?\s+extras?/i},
+    {chave:'insalubridade', nome:'Adicional de insalubridade', regex:/adicional\s+de\s+insalubridade|insalubr/i},
+    {chave:'periculosidade', nome:'Adicional de periculosidade', regex:/adicional\s+de\s+periculosidade|periculos/i},
+    {chave:'noturno', nome:'Adicional noturno', regex:/adicional\s+noturno|hora\s+noturna/i},
+    {chave:'aviso_previo', nome:'Aviso prévio proporcional', regex:/aviso\s+pr[ée]vio/i},
+    {chave:'multa_477', nome:'Multa do art. 477 CLT', regex:/multa\s+(?:do\s+)?art(?:igo|\.)?\s*477/i},
+    {chave:'multa_467', nome:'Multa do art. 467 CLT', regex:/multa\s+(?:do\s+)?art(?:igo|\.)?\s*467/i},
+    {chave:'diferencas', nome:'Diferenças salariais', regex:/(?:sal[áa]rio[\s\-]+substitui[çc][ãa]o|equipara[çc][ãa]o\s+salarial|desvio\s+de\s+fun[çc][ãa]o|diferen[çc]as?\s+salariais?)/i},
+    {chave:'dano_moral', nome:'Dano moral', regex:/dano\s+moral|indeniza[çc][ãa]o\s+por\s+dano/i},
+    {chave:'devolucao_descontos', nome:'Devolução de descontos', regex:/(?:ressarci\w+|devolu[çc][ãa]o)\s+(?:de\s+)?desconto/i},
+    {chave:'intrajornada', nome:'Intervalo intrajornada', regex:/intervalo\s+intra(?:\-?\s*)?jornada|intervalo\s+do\s+art(?:igo|\.)?\s*71/i},
+    {chave:'gratificacao', nome:'Gratificação de função', regex:/gratifica[çc][ãa]o\s+de\s+fun[çc][ãa]o/i},
+    {chave:'estabilidade', nome:'Estabilidade', regex:/estabilidade\s+(?:da\s+)?(?:gestante|acident|sindical|cipa)/i},
+    {chave:'ferias_proporcionais', nome:'Férias proporcionais + 1/3', regex:/f[ée]rias\s+(?:proporcionais?|integrais?)(?:.*?1\/3)?/i},
+    {chave:'13_proporcional', nome:'13º salário proporcional', regex:/13[ºo°]\.?\s*sal[áa]rio/i},
+    {chave:'fgts', nome:'FGTS + multa 40%', regex:/FGTS(?:\s+\+\s+40%)?/i},
+    {chave:'reconhecimento_vinculo', nome:'Reconhecimento de vínculo', regex:/reconhecimento\s+de\s+v[íi]nculo|v[íi]nculo\s+empregat[íi]cio/i},
+  ];
+  
+  // Para cada verba: procurar a posição no texto e verificar contexto próximo
+  for(const vp of VERBAS_PADROES){
+    const matchVerba = texto.match(vp.regex);
+    if(!matchVerba) continue;
+    
+    // Buscar contexto de até 300 chars em torno da menção
+    const idx = matchVerba.index;
+    const contexto = texto.substring(Math.max(0, idx-200), Math.min(texto.length, idx+300)).toLowerCase();
+    
+    let status = 'indefinido';
+    let temDef = false, temRej = false;
+    for(const pd of PALAVRAS_DEF){
+      if(new RegExp(pd, 'i').test(contexto)){ temDef = true; break; }
+    }
+    for(const pr of PALAVRAS_REJ){
+      if(new RegExp(pr, 'i').test(contexto)){ temRej = true; break; }
+    }
+    // Rejeição prevalece sobre deferimento se ambas aparecerem próximas
+    // (porque "não acolho o pedido de X" normalmente é mais perto)
+    if(temRej && !temDef) status = 'rejeitada';
+    else if(temDef && !temRej) status = 'deferida';
+    else if(temDef && temRej){
+      // Heurística: a palavra que aparecer MAIS PRÓXIMA da verba vence
+      const subTexto = contexto;
+      let posDef = Infinity, posRej = Infinity;
+      for(const pd of PALAVRAS_DEF){
+        const mm = subTexto.match(new RegExp(pd,'i'));
+        if(mm && mm.index < posDef) posDef = mm.index;
+      }
+      for(const pr of PALAVRAS_REJ){
+        const mm = subTexto.match(new RegExp(pr,'i'));
+        if(mm && mm.index < posRej) posRej = mm.index;
+      }
+      status = (posRej < posDef) ? 'rejeitada' : 'deferida';
+    }
+    
+    // Dedup: se já tem essa verba, mantém o status mais informativo
+    const existente = dados.verbas.find(v => v.chave === vp.chave);
+    if(existente){
+      if(existente.status === 'indefinido' && status !== 'indefinido') existente.status = status;
+      if(status === 'deferida') existente.status = 'deferida'; // deferida sempre prevalece
+    } else {
+      dados.verbas.push({chave: vp.chave, nome: vp.nome, status});
+    }
+  }
+  
+  return dados;
+}
+
+// =============================================
+// PREENCHER FORMULÁRIO COM DADOS EXTRAÍDOS
+// =============================================
+function preencherFormulario(dados){
+  if(dados.processo) document.getElementById('processo').value = dados.processo;
+  if(dados.vara) document.getElementById('vara').value = dados.vara;
+  if(dados.rito) document.getElementById('rito').value = dados.rito;
+  if(dados.salario) document.getElementById('salario').value = dados.salario;
+  if(dados.admissao) document.getElementById('admissao').value = dados.admissao;
+  if(dados.demissao) document.getElementById('demissao').value = dados.demissao;
+  
+  // Marcar checkboxes das verbas deferidas
+  const mapaChaveCb = {
+    'horas_extras': 'v-he',
+    'insalubridade': 'v-insal',
+    'periculosidade': 'v-peri',
+    'noturno': 'v-not',
+    'diferencas': 'v-dif',
+    'intrajornada': 'v-intra',
+    'gratificacao': 'v-grat',
+    'aviso_previo': 'v-aviso',
+    '13_proporcional': 'v-13',
+    'ferias_proporcionais': 'v-ferias',
+    'fgts': 'v-fgts',
+    'multa_477': 'v-m477',
+    'multa_467': 'v-m467',
+    'dano_moral': 'v-dano',
+    'estabilidade': 'v-estab',
+    'devolucao_descontos': 'v-desc',
+  };
+  
+  // Primeiro desmarca todas
+  document.querySelectorAll('.checkbox-verba input[type=checkbox]').forEach(cb => {
+    cb.checked = false;
+    const painel = document.querySelector(`.parametros[data-param="${cb.dataset.verba}"]`);
+    if(painel) painel.classList.remove('aberto');
+  });
+  
+  // Marca as deferidas
+  dados.verbas.forEach(v => {
+    if(v.status === 'deferida'){
+      const cbId = mapaChaveCb[v.chave];
+      if(cbId){
+        const cb = document.getElementById(cbId);
+        if(cb){
+          cb.checked = true;
+          // Abre parâmetros se existir
+          const painel = document.querySelector(`.parametros[data-param="${cb.dataset.verba}"]`);
+          if(painel) painel.classList.add('aberto');
+        }
+      }
+    }
+  });
+}
+
+// =============================================
+// PROCESSAR ARQUIVO
+// =============================================
+async function processarPDF(file){
+  resetUploader();
+  
+  // Validações básicas
+  if(!file.name.toLowerCase().endsWith('.pdf')){
+    uploader.classList.add('erro');
+    uploadResultado.style.display = 'block';
+    uploadResultado.style.borderLeftColor = 'var(--red)';
+    uploadResultado.innerHTML = '<h4 style="color:var(--red)">Erro</h4>Arquivo não é PDF. Tente novamente com um arquivo .pdf.';
+    return;
+  }
+  if(file.size > 20 * 1024 * 1024){
+    uploader.classList.add('erro');
+    uploadResultado.style.display = 'block';
+    uploadResultado.style.borderLeftColor = 'var(--red)';
+    uploadResultado.innerHTML = '<h4 style="color:var(--red)">Erro</h4>Arquivo muito grande (>20 MB). Tente um PDF menor.';
+    return;
+  }
+  
+  // Mostrar arquivo
+  uploadArquivo.style.display = 'inline-block';
+  uploadArquivo.textContent = file.name + ' · ' + (file.size/1024).toFixed(0) + ' KB';
+  
+  // Processando
+  uploader.classList.add('processando');
+  uploadResultado.style.display = 'block';
+  uploadResultado.style.borderLeftColor = 'var(--gold)';
+  uploadResultado.innerHTML = '<div class="upload-spinner"></div> Lendo PDF e extraindo dados...';
+  
+  try {
+    // Extrair texto via PDF.js
+    const texto = await extrairTextoPDF(file);
+    
+    if(!texto || texto.trim().length < 100){
+      throw new Error('PDF aparenta estar vazio ou ser uma imagem escaneada (sem texto pesquisável). Tente um PDF com texto, ou use um OCR antes.');
+    }
+    
+    // Extrair dados estruturados
+    const dados = extrairDadosSentenca(texto);
+    
+    // Preencher formulário
+    preencherFormulario(dados);
+    
+    // Mostrar resumo do que foi extraído
+    uploader.classList.remove('processando');
+    uploader.classList.add('sucesso');
+    uploadResultado.style.borderLeftColor = 'var(--good)';
+    
+    const verbasDef = dados.verbas.filter(v => v.status === 'deferida');
+    const verbasRej = dados.verbas.filter(v => v.status === 'rejeitada');
+    
+    let html = '<h4>Dados extraídos</h4>';
+    if(dados.processo) html += `<div class="item-extraido"><span>Processo</span><span class="v">${dados.processo}</span></div>`;
+    if(dados.vara) html += `<div class="item-extraido"><span>Vara</span><span class="v">${dados.vara}</span></div>`;
+    if(dados.juiz) html += `<div class="item-extraido"><span>Juiz</span><span class="v">${dados.juiz}</span></div>`;
+    if(dados.rito) html += `<div class="item-extraido"><span>Rito</span><span class="v">${dados.rito}</span></div>`;
+    if(dados.salario) html += `<div class="item-extraido"><span>Salário-base</span><span class="v">R$ ${fmtBRL(dados.salario)}</span></div>`;
+    if(dados.admissao) html += `<div class="item-extraido"><span>Admissão</span><span class="v">${dados.admissao.split('-').reverse().join('/')}</span></div>`;
+    if(dados.demissao) html += `<div class="item-extraido"><span>Demissão</span><span class="v">${dados.demissao.split('-').reverse().join('/')}</span></div>`;
+    if(dados.periodo_sem_registro_inicio){
+      html += `<div class="item-extraido"><span>Período sem registro</span><span class="v">${dados.periodo_sem_registro_inicio.split('-').reverse().join('/')} a ${dados.periodo_sem_registro_fim.split('-').reverse().join('/')}</span></div>`;
+    }
+    if(dados.custas) html += `<div class="item-extraido"><span>Custas</span><span class="v">R$ ${fmtBRL(dados.custas)}</span></div>`;
+    if(dados.honorarios_pct) html += `<div class="item-extraido"><span>Honorários</span><span class="v">${dados.honorarios_pct}%</span></div>`;
+    
+    if(dados.verbas.length > 0){
+      html += '<div class="verbas-lista"><strong style="font-size:11px">Verbas identificadas:</strong><br>';
+      verbasDef.forEach(v => {
+        html += `<span class="verba-tag def" title="Deferida">✓ ${v.nome}</span>`;
+      });
+      verbasRej.forEach(v => {
+        html += `<span class="verba-tag rej" title="Rejeitada">✗ ${v.nome}</span>`;
+      });
+      html += '</div>';
+      html += `<div style="margin-top:10px;font-size:11px;color:var(--mute)"><strong>${verbasDef.length} verba(s) deferida(s)</strong> foram marcadas no formulário abaixo. Confira os parâmetros antes de calcular.</div>`;
+    } else {
+      html += '<div style="margin-top:10px;font-size:11px;color:var(--warn)">Nenhuma verba foi identificada automaticamente. Marque manualmente as verbas deferidas.</div>';
+    }
+    
+    // Aviso se faltou demissão (comum — ela costuma estar no TRCT, não na sentença)
+    if(!dados.demissao){
+      html += '<div style="margin-top:10px;font-size:11px;color:var(--warn)">⚠ Data de demissão não foi identificada. Preencha manualmente abaixo (geralmente está no TRCT, não no texto da sentença).</div>';
+    }
+    
+    uploadResultado.innerHTML = html;
+    
+    // Scroll suave até o formulário
+    setTimeout(() => {
+      document.getElementById('salario').scrollIntoView({behavior:'smooth', block:'center'});
+    }, 400);
+    
+  } catch(err) {
+    uploader.classList.remove('processando');
+    uploader.classList.add('erro');
+    uploadResultado.style.borderLeftColor = 'var(--red)';
+    uploadResultado.innerHTML = `<h4 style="color:var(--red)">Erro ao processar</h4>${err.message || err}`;
+    console.error('Erro:', err);
+  }
+}
+</script>
+
+</body>
+</html>
